@@ -163,17 +163,10 @@ class EEGProcessor:
         labels = []
         for event in epochs.events:
             event_code = event[2]
-            found = False
-
             for name, code in epochs.event_id.items():
                 if code == event_code and name in self.label_mapping:
                     labels.append(self.label_mapping[name])
-                    found = True
                     break
-
-            if not found:
-                labels.append(0)  # Default to class 0
-
         return np.array(labels)
 
     def normalize_data(self, X):
@@ -327,7 +320,7 @@ if __name__ == "__main__":
     data = load_bci_data(data_path, subject_ids=[1], use_filterbank=True)
 
     if data:
-        subject_data = data['S01']
+        subject_data = data['S02']
         X = subject_data['data']
         y = subject_data['labels']
 
