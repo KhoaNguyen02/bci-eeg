@@ -14,6 +14,8 @@ class MotorImageryDataLoader:
                 test_size=0.2,
                 random_state=None,
                 shuffle=False,
+                io_path=None,
+                split_path=None,
                 num_worker=4):
 
         # Download if needed
@@ -33,6 +35,7 @@ class MotorImageryDataLoader:
                 transforms.Select('label'),
                 transforms.Lambda(lambda x: x - 1)
             ]),
+            io_path=io_path,
             num_worker=num_worker
         )
 
@@ -41,7 +44,8 @@ class MotorImageryDataLoader:
             dataset=self.dataset,
             test_size=test_size,
             shuffle=shuffle,
-            random_state=random_state
+            random_state=random_state,
+            split_path=split_path
         )
 
     def _download_if_needed(self):
@@ -54,7 +58,7 @@ class MotorImageryDataLoader:
 
         missing_files = [f for f in files if not (self.mat_folder / f).exists()]
         if missing_files:
-                print(f"BCICIV_2a dataset is missing. Downloading {len(missing_files)} files...")
+            print(f"BCICIV_2a dataset is missing. Downloading {len(missing_files)} files...")
 
         for filename in files:
             file_path = self.mat_folder / filename
@@ -71,5 +75,6 @@ class MotorImageryDataLoader:
                             shuffle=shuffle, num_workers=num_workers, pin_memory=True)
 
     def get_loaders(self, batch_size=16, shuffle_train=True, num_workers=0):
+        # Dataloader shape: (batch_size, 1, num_channel, chunk_size)
         return (self.get_train_loader(batch_size, shuffle_train, num_workers),
                 self.get_test_loader(batch_size, False, num_workers))
