@@ -1,0 +1,31 @@
+{
+    "data_dir": "./data",
+    "chunk_size": 1750,
+    "num_channels": 22,
+    "num_classes": 4,
+    "test_size": 0.2,
+    "val_size": 0.1,
+    "random_state": 42,
+    "io_path": null,
+    "split_path": null,
+    
+    "batch_size": 16,
+    "epochs": 100,
+    "learning_rate": 0.001,
+    "weight_decay": 1e-4,
+    "early_stopping_patience": 15,
+    
+    "wandb_project": "bci-eeg",
+    
+    "model": {
+        "F1": 8,
+        "F2": 16,
+        "D": 2,
+        "kernel_1": 64,
+        "kernel_2": 16,
+        "dropout": 0.5,
+        "max_norm": 1.0,
+        "decor_lr": 0.01,
+        "kappa": 0.5
+    }
+}
